@@ -152,7 +152,7 @@ line_count()
 # Convert URI in standard or nonstandard form to rsync's user@host:path
 rsynclocation ()
 {
-	echo "${1#rsync://}" | sed 's/\(^[^:/]*\)\//\1:\//'
+	echo "$1"
 }
 
 
@@ -235,7 +235,7 @@ GET()
 		(exec 0>&-; curl -s -S -k "$1/$2") > "$3"
 	elif isurl rsync "$1"
 	then
-		(exec 0>&-; rsync -I -W "$(rsynclocation "$1")"/"$2" "$3" >&2)
+		(exec 0>&-; rsync -I -W $Conf_rsync_put_flags "$(rsynclocation "$1")"/"$2" "$3" >&2)
 	elif isurl rclone "$1"
 	then
 		(exec 0>&-; rclone copyto "${1#rclone://}"/"$2" "$3" >&2)
@@ -309,7 +309,7 @@ REMOVE()
 		echo_info "sftp: Ignore remove request $1/$2"
 	elif isurl rsync "$1"
 	then
-		xfeed "$2" rsync -I -W -v -r --delete --include-from=- \
+		xfeed "$2" rsync -I -W -v -r $Conf_rsync_put_flags --delete --include-from=- \
 			--exclude='*' "$Localdir"/ "$(rsynclocation "$1")/" >&2
 	elif isurl rclone "$1"
 	then
