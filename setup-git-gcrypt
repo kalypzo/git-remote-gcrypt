@@ -1,0 +1,12 @@
+if [[ "$#" -ne 2 ]]; then
+  echo "$(basename $0) remote-name rsync-url"
+  exit 1
+fi
+git remote add $1 gcrypt::$2
+gpg -k --keyid-format short
+echo "Provide key id for encrypting"
+read participants
+git config --add remote.$1.gcrypt-participants "$participants"
+echo "Enter any additional rsync flags here, or just press Enter if none"
+read flags
+git config --add remote.$1.gcrypt-rsync-put-flags "$flags"
