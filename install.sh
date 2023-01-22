@@ -3,7 +3,7 @@
 set -e
 
 : ${prefix:=/usr/local}
-: ${DESTDIR:=}
+: ${DESTDIR:=build}
 
 verbose() { echo "$@" >&2 && "$@"; }
 install_v()
