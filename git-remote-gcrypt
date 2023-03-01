@@ -493,6 +493,7 @@ read_config()
 		echo_info "You have not configured any keys you can encrypt to" \
 			"for this repository"
 		echo_info "Use ::"
+		echo_info "Is it possible your keys have expired?"
 		echo_info "  git config gcrypt.participants YOURKEYID"
 		exit 1
 	fi
