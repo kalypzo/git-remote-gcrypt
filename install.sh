@@ -14,6 +14,7 @@ install_v()
 }
 
 install_v git-remote-gcrypt "$DESTDIR$prefix/bin" 755
+install_v setup-git-gcrypt "$DESTDIR$prefix/bin" 755
 
 if command -v rst2man >/dev/null
 then
